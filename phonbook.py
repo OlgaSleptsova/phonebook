@@ -1,7 +1,5 @@
 
 
-
-
 class Contact:
     def __init__(self,name,surname, numberphone,*args,**kwargs):
         self.name = name
@@ -41,31 +39,38 @@ class Phonbook:
     def __init__(self,name):
         self.name = name
         self.contact = []
-    def add_contact(self,new_contact):
-        self.contact.append(new_contact.__str1__().split())
-        return self.contact
+    def add_contact(self,name,surname, numberphone,*args,**kwargs):# добавляем контакты
+        contact = Contact(name,surname, numberphone,*args,**kwargs)
+        self.contact.append(contact)
+    def find_contact(self,name): # Поиск контакта по имени
+        for contact in self.contact:
+            if contact.name == name:
+                return contact.__str1__()
+    def __str__(self): # Вывод контактов
+       for contact in self.contact:
+            return f'{contact.name},{contact.surname},{contact.numberphone},{contact.args},{contact.kwargs}'
 
-    def __str__(self):
-        return self.contact
+    def del_contact(self,numberphone):# Удаление контакта по номеру телефона
+        for contact in self.contact:
+            if contact.numberphone == numberphone:
+                self.contact.remove(contact)
 
-jhon = Contact('Jhon', 'Smith', '+71234567809', 'like',telegram='@jhony', email='jhony@smith.com')
-olga = Contact('Olga', 'Sleptsova', '+79152336956')
-sereja = Contact('Sereja','Sleptsov', '+79252206719')
+    def like_number(self):# Вывод избранных контактов
+        for contact in self.contact:
+            if 'like' in contact.args:
+                return contact.__str1__()
+
+    def adv_find_contact(self,name,surname): # Поиск по имени и фамилии
+        for contact in self.contact:
+            if contact.name ==name and contact.surname ==surname:
+                return contact.__str1__()
+
+
 
 ols = Phonbook('jek')
-ols.add_contact(jhon)
-ols.add_contact(olga)
-ols.add_contact(sereja)
-
-print(ols.__str__())
+ols.add_contact('Jhon', 'Smith', '+71234567809','like',telegram='@jhony', email='jhony@smith.com')
 
 
-# def foo(a,b,*args,**kwargs):
-#     print(a,b)
-#
-#     print(args)
-#     print(kwargs)
-# y = foo(1,2,'Jhon', 'Smith', '+71234567809', n_typl = (), n_list = [])
-# print(y)
-# dd = (1,2)
-# print((lambda x,y: x * y)(dd[0],dd[1]))
+
+
+
